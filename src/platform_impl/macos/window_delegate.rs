@@ -798,6 +798,12 @@ impl WindowDelegate {
         self.window().setTitle(&NSString::from_str(title))
     }
 
+    pub fn set_subtitle(&self, subtitle: &str) {
+        unsafe {
+            self.window().setSubtitle(&NSString::from_str(subtitle));
+        }
+    }
+
     pub fn set_transparent(&self, transparent: bool) {
         self.window().setOpaque(!transparent)
     }

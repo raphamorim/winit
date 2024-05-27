@@ -930,6 +930,13 @@ impl Window {
         self.window.maybe_wait_on_main(|w| w.set_title(title))
     }
 
+    #[inline]
+    #[cfg(target_os = "macos")]
+    pub fn set_subtitle(&self, title: &str) {
+        let _span = tracing::debug_span!("winit::Window::set_title", title).entered();
+        self.window.maybe_wait_on_main(|w| w.set_subtitle(title))
+    }
+
     /// Change the window transparency state.
     ///
     /// This is just a hint that may not change anything about
