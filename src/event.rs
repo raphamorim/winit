@@ -103,6 +103,8 @@ pub enum Event<T: 'static> {
     ///
     /// [`ApplicationHandler::memory_warning`]: crate::application::ApplicationHandler::memory_warning
     MemoryWarning,
+
+    Opened { urls: Vec<String> },
 }
 
 impl<T> Event<T> {
@@ -119,6 +121,7 @@ impl<T> Event<T> {
             Suspended => Ok(Suspended),
             Resumed => Ok(Resumed),
             MemoryWarning => Ok(MemoryWarning),
+            Opened { urls } => Ok(Opened { urls }),
         }
     }
 }

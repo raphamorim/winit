@@ -222,4 +222,8 @@ pub trait ApplicationHandler<T: 'static = ()> {
     fn memory_warning(&mut self, event_loop: &ActiveEventLoop) {
         let _ = event_loop;
     }
+
+    fn open_urls(&mut self, event_loop: &ActiveEventLoop, urls: Vec<String>) {
+        let _ = (event_loop, urls);
+    }
 }

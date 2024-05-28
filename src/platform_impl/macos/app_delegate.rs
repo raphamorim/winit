@@ -9,7 +9,7 @@ use objc2::rc::Retained;
 use objc2::runtime::AnyObject;
 use objc2::{declare_class, msg_send_id, mutability, ClassType, DeclaredClass};
 use objc2_app_kit::{NSApplication, NSApplicationActivationPolicy, NSApplicationDelegate};
-use objc2_foundation::{MainThreadMarker, NSObject, NSObjectProtocol, NSSize};
+use objc2_foundation::{MainThreadMarker, NSObject, NSObjectProtocol, NSSize, NSURL, NSArray};
 
 use super::event_handler::EventHandler;
 use super::event_loop::{stop_app_immediately, ActiveEventLoop, PanicInfo};
@@ -123,6 +123,24 @@ declare_class!(
             trace_scope!("applicationWillTerminate:");
             // TODO: Notify every window that it will be destroyed, like done in iOS?
             self.internal_exit();
+        }
+
+        #[method(application:openURLs:)]
+        fn application_open_urls(&self, _application: &NSApplication, urls: &NSArray<NSURL>) {
+            trace_scope!("Trigger `application:openURLs:`");
+
+            let mut open_urls: Vec<String> = Vec::new();
+            urls.into_iter().for_each(|url| {
+                unsafe {
+                    if let Some(ns_str) = url.absoluteString() {
+                        open_urls.push(ns_str.to_string());
+                    }
+                }
+            });
+            
+            self.open_urls(open_urls);
+
+            trace_scope!("Completed `application:openURLs:`");
         }
     }
 );
@@ -296,6 +314,10 @@ impl ApplicationDelegate {
         // NB: For consistency all platforms must emit a 'resumed' event even though macOS
         // applications don't themselves have a formal suspend/resume lifecycle.
         self.handle_event(Event::Resumed);
+    }
+
+    pub fn open_urls(&self, urls: Vec<String>) {
+        self.handle_event(Event::Opened { urls });
     }
 
     // Called by RunLoopObserver after finishing waiting for new events
