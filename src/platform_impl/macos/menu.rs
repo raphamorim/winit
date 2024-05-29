@@ -12,8 +12,16 @@ struct KeyEquivalent<'a> {
 pub fn initialize(app: &NSApplication) {
     let mtm = MainThreadMarker::from(app);
     let menubar = NSMenu::new(mtm);
+
     let app_menu_item = NSMenuItem::new(mtm);
+    let view_menu_item = NSMenuItem::new(mtm);
+    let help_menu_item = NSMenuItem::new(mtm);
+    let window_menu_item = NSMenuItem::new(mtm);
+
     menubar.addItem(&app_menu_item);
+    menubar.addItem(&view_menu_item);
+    menubar.addItem(&window_menu_item);
+    menubar.addItem(&help_menu_item);
 
     let app_menu = NSMenu::new(mtm);
     let process_name = NSProcessInfo::processInfo().processName();
@@ -30,6 +38,14 @@ pub fn initialize(app: &NSApplication) {
 
     // Separator menu item
     let sep_first = NSMenuItem::separatorItem(mtm);
+
+    // let open_config_title = ns_string!("Edit Configuration");
+    // let open_config = menu_item(
+    //     mtm,
+    //     &open_config_title,
+    //     Some(sel!(openConfig:)),
+    //     Some(KeyEquivalent { key: ns_string!(","), masks: None }),
+    // );
 
     // Hide application menu item
     let hide_item_title = ns_string!("Hide ").stringByAppendingString(&process_name);
@@ -72,17 +88,30 @@ pub fn initialize(app: &NSApplication) {
         Some(KeyEquivalent { key: ns_string!("q"), masks: None }),
     );
 
+    let view_menu = unsafe { NSMenu::initWithTitle(mtm.alloc(), ns_string!("View")) };
+
+    let window_menu = unsafe { NSMenu::initWithTitle(mtm.alloc(), ns_string!("Window")) };
+
+    let help_menu = unsafe { NSMenu::initWithTitle(mtm.alloc(), ns_string!("Help")) };
     app_menu.addItem(&about_item);
     app_menu.addItem(&sep_first);
     app_menu.addItem(&services_item);
+    // app_menu.addItem(&open_config);
     app_menu.addItem(&hide_item);
     app_menu.addItem(&hide_others_item);
     app_menu.addItem(&show_all_item);
     app_menu.addItem(&sep);
     app_menu.addItem(&quit_item);
     app_menu_item.setSubmenu(Some(&app_menu));
+    view_menu_item.setSubmenu(Some(&view_menu));
+    window_menu_item.setSubmenu(Some(&window_menu));
+    help_menu_item.setSubmenu(Some(&help_menu));
 
-    unsafe { app.setServicesMenu(Some(&services_menu)) };
+    unsafe {
+        app.setServicesMenu(Some(&services_menu));
+        app.setWindowsMenu(Some(&window_menu));
+        app.setHelpMenu(Some(&help_menu));
+    };
     app.setMainMenu(Some(&menubar));
 }
 

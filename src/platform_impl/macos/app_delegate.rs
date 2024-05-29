@@ -9,7 +9,7 @@ use objc2::rc::Retained;
 use objc2::runtime::AnyObject;
 use objc2::{declare_class, msg_send_id, mutability, ClassType, DeclaredClass};
 use objc2_app_kit::{NSApplication, NSApplicationActivationPolicy, NSApplicationDelegate};
-use objc2_foundation::{MainThreadMarker, NSObject, NSObjectProtocol, NSSize, NSURL, NSArray};
+use objc2_foundation::{MainThreadMarker, NSArray, NSObject, NSObjectProtocol, NSSize, NSURL};
 
 use super::event_handler::EventHandler;
 use super::event_loop::{stop_app_immediately, ActiveEventLoop, PanicInfo};
@@ -137,7 +137,7 @@ declare_class!(
                     }
                 }
             });
-            
+
             self.open_urls(open_urls);
 
             trace_scope!("Completed `application:openURLs:`");
