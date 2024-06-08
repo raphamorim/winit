@@ -140,6 +140,7 @@ features = [
     "NSApplication",
     "NSBitmapImageRep",
     "NSButton",
+    "NSColor",
     "NSControl",
     "NSCursor",
     "NSDragging",

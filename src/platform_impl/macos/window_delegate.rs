@@ -13,7 +13,7 @@ use objc2_app_kit::{
     NSFilenamesPboardType, NSPasteboard, NSRequestUserAttentionType, NSScreen, NSView,
     NSWindowButton, NSWindowDelegate, NSWindowFullScreenButton, NSWindowLevel,
     NSWindowOcclusionState, NSWindowOrderingMode, NSWindowSharingType, NSWindowStyleMask,
-    NSWindowTabbingMode, NSWindowTitleVisibility,
+    NSWindowTabbingMode, NSWindowTitleVisibility, NSColor,
 };
 use objc2_foundation::{
     ns_string, CGFloat, MainThreadMarker, NSArray, NSCopying, NSDistributedNotificationCenter,
@@ -805,7 +805,17 @@ impl WindowDelegate {
     }
 
     pub fn set_transparent(&self, transparent: bool) {
-        self.window().setOpaque(!transparent)
+        self.window().setOpaque(!transparent);
+
+        if transparent {
+            unsafe {
+                self.window().setBackgroundColor(Some(&NSColor::clearColor()));
+            }
+        } else {
+            unsafe {
+                self.window().setBackgroundColor(Some(&NSColor::blackColor()));
+            }
+        }
     }
 
     pub fn set_blur(&self, blur: bool) {
