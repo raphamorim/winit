@@ -329,14 +329,6 @@ impl<T> rwh_06::HasDisplayHandle for EventLoop<T> {
     }
 }
 
-#[cfg(feature = "rwh_05")]
-unsafe impl<T> rwh_05::HasRawDisplayHandle for EventLoop<T> {
-    /// Returns a [`rwh_05::RawDisplayHandle`] for the event loop.
-    fn raw_display_handle(&self) -> rwh_05::RawDisplayHandle {
-        rwh_05::HasRawDisplayHandle::raw_display_handle(self.event_loop.window_target())
-    }
-}
-
 #[cfg(any(x11_platform, wayland_platform))]
 impl<T> AsFd for EventLoop<T> {
     /// Get the underlying [EventLoop]'s `fd` which you can register
@@ -480,14 +472,6 @@ impl rwh_06::HasDisplayHandle for ActiveEventLoop {
     }
 }
 
-#[cfg(feature = "rwh_05")]
-unsafe impl rwh_05::HasRawDisplayHandle for ActiveEventLoop {
-    /// Returns a [`rwh_05::RawDisplayHandle`] for the event loop.
-    fn raw_display_handle(&self) -> rwh_05::RawDisplayHandle {
-        self.p.raw_display_handle_rwh_05()
-    }
-}
-
 /// A proxy for the underlying display handle.
 ///
 /// The purpose of this type is to provide a cheaply clonable handle to the underlying
@@ -502,7 +486,7 @@ unsafe impl rwh_05::HasRawDisplayHandle for ActiveEventLoop {
 /// - A reference-counted pointer to the underlying type.
 #[derive(Clone)]
 pub struct OwnedDisplayHandle {
-    #[cfg_attr(not(any(feature = "rwh_05", feature = "rwh_06")), allow(dead_code))]
+    #[cfg_attr(not(feature = "rwh_06"), allow(dead_code))]
     platform: platform_impl::OwnedDisplayHandle,
 }
 
@@ -526,13 +510,6 @@ impl rwh_06::HasDisplayHandle for OwnedDisplayHandle {
     }
 }
 
-#[cfg(feature = "rwh_05")]
-unsafe impl rwh_05::HasRawDisplayHandle for OwnedDisplayHandle {
-    #[inline]
-    fn raw_display_handle(&self) -> rwh_05::RawDisplayHandle {
-        self.platform.raw_display_handle_rwh_05()
-    }
-}
 
 /// Used to send custom events to [`EventLoop`].
 pub struct EventLoopProxy<T: 'static> {

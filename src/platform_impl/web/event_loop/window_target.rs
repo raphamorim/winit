@@ -74,10 +74,6 @@ impl ActiveEventLoop {
 
     pub fn register(&self, canvas: &Rc<RefCell<backend::Canvas>>, id: WindowId) {
         let canvas_clone = canvas.clone();
-        let mut canvas = canvas.borrow_mut();
-        #[cfg(any(feature = "rwh_04", feature = "rwh_05"))]
-        canvas.set_attribute("data-raw-handle", &id.0.to_string());
-
         canvas.on_touch_start();
 
         let runner = self.runner.clone();
@@ -640,12 +636,6 @@ impl ActiveEventLoop {
         None
     }
 
-    #[cfg(feature = "rwh_05")]
-    #[inline]
-    pub fn raw_display_handle_rwh_05(&self) -> rwh_05::RawDisplayHandle {
-        rwh_05::RawDisplayHandle::Web(rwh_05::WebDisplayHandle::empty())
-    }
-
     #[cfg(feature = "rwh_06")]
     #[inline]
     pub fn raw_display_handle_rwh_06(
@@ -695,12 +685,6 @@ impl ActiveEventLoop {
 pub(crate) struct OwnedDisplayHandle;
 
 impl OwnedDisplayHandle {
-    #[cfg(feature = "rwh_05")]
-    #[inline]
-    pub fn raw_display_handle_rwh_05(&self) -> rwh_05::RawDisplayHandle {
-        rwh_05::WebDisplayHandle::empty().into()
-    }
-
     #[cfg(feature = "rwh_06")]
     #[inline]
     pub fn raw_display_handle_rwh_06(

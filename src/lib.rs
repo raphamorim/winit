@@ -141,8 +141,6 @@
 //!
 //! * `x11` (enabled by default): On Unix platforms, enables the X11 backend.
 //! * `wayland` (enabled by default): On Unix platforms, enables the Wayland backend.
-//! * `rwh_04`: Implement `raw-window-handle v0.4` traits.
-//! * `rwh_05`: Implement `raw-window-handle v0.5` traits.
 //! * `rwh_06`: Implement `raw-window-handle v0.6` traits.
 //! * `serde`: Enables serialization/deserialization of certain types with [Serde](https://crates.io/crates/serde).
 //! * `mint`: Enables mint (math interoperability standard types) conversions.
@@ -178,10 +176,6 @@
 #![cfg_attr(docsrs, feature(doc_auto_cfg, doc_cfg_hide), doc(cfg_hide(doc, docsrs)))]
 #![allow(clippy::missing_safety_doc)]
 
-#[cfg(feature = "rwh_04")]
-pub use rwh_04 as raw_window_handle_04;
-#[cfg(feature = "rwh_05")]
-pub use rwh_05 as raw_window_handle_05;
 #[cfg(feature = "rwh_06")]
 pub use rwh_06 as raw_window_handle;
 
