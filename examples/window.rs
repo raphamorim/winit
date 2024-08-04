@@ -15,20 +15,20 @@ use rwh_06::{DisplayHandle, HasDisplayHandle};
 #[cfg(not(any(android_platform, ios_platform)))]
 use softbuffer::{Context, Surface};
 
-use winit::application::ApplicationHandler;
-use winit::dpi::{LogicalSize, PhysicalPosition, PhysicalSize};
-use winit::event::{DeviceEvent, DeviceId, Ime, MouseButton, MouseScrollDelta, WindowEvent};
-use winit::event_loop::{ActiveEventLoop, EventLoop};
-use winit::keyboard::{Key, ModifiersState};
-use winit::window::{
+use rio_winit_fork::application::ApplicationHandler;
+use rio_winit_fork::dpi::{LogicalSize, PhysicalPosition, PhysicalSize};
+use rio_winit_fork::event::{DeviceEvent, DeviceId, Ime, MouseButton, MouseScrollDelta, WindowEvent};
+use rio_winit_fork::event_loop::{ActiveEventLoop, EventLoop};
+use rio_winit_fork::keyboard::{Key, ModifiersState};
+use rio_winit_fork::window::{
     Cursor, CursorGrabMode, CustomCursor, CustomCursorSource, Fullscreen, Icon, ResizeDirection,
     Theme, Window, WindowId,
 };
 
 #[cfg(macos_platform)]
-use winit::platform::macos::{OptionAsAlt, WindowAttributesExtMacOS, WindowExtMacOS};
+use rio_winit_fork::platform::macos::{OptionAsAlt, WindowAttributesExtMacOS, WindowExtMacOS};
 #[cfg(any(x11_platform, wayland_platform))]
-use winit::platform::startup_notify::{
+use rio_winit_fork::platform::startup_notify::{
     self, EventLoopExtStartupNotify, WindowAttributesExtStartupNotify, WindowExtStartupNotify,
 };
 
@@ -147,7 +147,7 @@ impl Application {
 
         #[cfg(web_platform)]
         {
-            use winit::platform::web::WindowAttributesExtWebSys;
+            use rio_winit_fork::platform::web::WindowAttributesExtWebSys;
             window_attributes = window_attributes.with_append(true);
         }
 
@@ -155,7 +155,7 @@ impl Application {
 
         #[cfg(ios_platform)]
         {
-            use winit::platform::ios::WindowExtIOS;
+            use rio_winit_fork::platform::ios::WindowExtIOS;
             window.recognize_doubletap_gesture(true);
             window.recognize_pinch_gesture(true);
             window.recognize_rotation_gesture(true);
@@ -705,7 +705,7 @@ impl WindowState {
         custom_cursors: &[CustomCursor],
     ) {
         use std::time::Duration;
-        use winit::platform::web::CustomCursorExtWebSys;
+        use rio_winit_fork::platform::web::CustomCursorExtWebSys;
 
         let cursors = vec![
             custom_cursors[0].clone(),
@@ -940,7 +940,7 @@ fn decode_cursor(bytes: &[u8]) -> CustomCursorSource {
 fn url_custom_cursor() -> CustomCursorSource {
     use std::sync::atomic::{AtomicU64, Ordering};
 
-    use winit::platform::web::CustomCursorExtWebSys;
+    use rio_winit_fork::platform::web::CustomCursorExtWebSys;
 
     static URL_COUNTER: AtomicU64 = AtomicU64::new(0);
 

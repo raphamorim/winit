@@ -638,8 +638,8 @@ pub struct KeyEvent {
     /// done by ignoring events where this property is set.
     ///
     /// ```
-    /// use winit::event::{ElementState, KeyEvent, WindowEvent};
-    /// use winit::keyboard::{KeyCode, PhysicalKey};
+    /// use rio_winit_fork::event::{ElementState, KeyEvent, WindowEvent};
+    /// use rio_winit_fork::keyboard::{KeyCode, PhysicalKey};
     /// # let window_event = WindowEvent::RedrawRequested; // To make the example compile
     /// match window_event {
     ///     WindowEvent::KeyboardInput {

@@ -6,7 +6,7 @@
 //! the [`EventLoop::new()`] function.
 //!
 //! ```no_run
-//! use winit::event_loop::EventLoop;
+//! use rio_winit_fork::event_loop::EventLoop;
 //! let event_loop = EventLoop::new().unwrap();
 //! ```
 //!
@@ -42,10 +42,10 @@
 //!
 //!
 //! ```no_run
-//! use winit::application::ApplicationHandler;
-//! use winit::event::WindowEvent;
-//! use winit::event_loop::{ActiveEventLoop, ControlFlow, EventLoop};
-//! use winit::window::{Window, WindowId};
+//! use rio_winit_fork::application::ApplicationHandler;
+//! use rio_winit_fork::event::WindowEvent;
+//! use rio_winit_fork::event_loop::{ActiveEventLoop, ControlFlow, EventLoop};
+//! use rio_winit_fork::window::{Window, WindowId};
 //!
 //! #[derive(Default)]
 //! struct App {
@@ -184,8 +184,6 @@ pub use rwh_06 as raw_window_handle;
 pub use dpi;
 
 pub mod application;
-#[cfg(any(doc, doctest, test))]
-pub mod changelog;
 #[macro_use]
 pub mod error;
 mod cursor;

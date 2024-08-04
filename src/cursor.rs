@@ -48,10 +48,10 @@ impl From<CustomCursor> for Cursor {
 /// # Example
 ///
 /// ```no_run
-/// # use winit::event_loop::ActiveEventLoop;
-/// # use winit::window::Window;
+/// # use rio_winit_fork::event_loop::ActiveEventLoop;
+/// # use rio_winit_fork::window::Window;
 /// # fn scope(event_loop: &ActiveEventLoop, window: &Window) {
-/// use winit::window::CustomCursor;
+/// use rio_winit_fork::window::CustomCursor;
 ///
 /// let w = 10;
 /// let h = 10;
@@ -62,7 +62,7 @@ impl From<CustomCursor> for Cursor {
 ///
 /// #[cfg(target_family = "wasm")]
 /// let source = {
-///     use winit::platform::web::CustomCursorExtWebSys;
+///     use rio_winit_fork::platform::web::CustomCursorExtWebSys;
 ///     CustomCursor::from_url(String::from("http://localhost:3000/cursor.png"), 0, 0)
 /// };
 ///
@@ -89,7 +89,7 @@ impl CustomCursor {
         hotspot_y: u16,
     ) -> Result<CustomCursorSource, BadImage> {
         let _span =
-            tracing::debug_span!("winit::Cursor::from_rgba", width, height, hotspot_x, hotspot_y)
+            tracing::debug_span!("rio_winit_fork::Cursor::from_rgba", width, height, hotspot_x, hotspot_y)
                 .entered();
 
         Ok(CustomCursorSource {

@@ -20,7 +20,7 @@ mod platform {
     use std::num::NonZeroU32;
 
     use softbuffer::{Context, Surface};
-    use winit::window::{Window, WindowId};
+    use rio_winit_fork::window::{Window, WindowId};
 
     thread_local! {
         // NOTE: You should never do things like that, create context and drop it before
@@ -106,12 +106,12 @@ mod platform {
 
 #[cfg(not(all(feature = "rwh_06", not(any(target_os = "android", target_os = "ios")))))]
 mod platform {
-    pub fn fill_window(_window: &winit::window::Window) {
+    pub fn fill_window(_window: &rio_winit_fork::window::Window) {
         // No-op on mobile platforms.
     }
 
     #[allow(dead_code)]
-    pub fn cleanup_window(_window: &winit::window::Window) {
+    pub fn cleanup_window(_window: &rio_winit_fork::window::Window) {
         // No-op on mobile platforms.
     }
 }
