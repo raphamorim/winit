@@ -646,7 +646,7 @@ impl ActiveEventLoop {
         self.xconn.primary_monitor().ok()
     }
 
-    pub(crate) fn create_custom_cursor(&self, cursor: CustomCursorSource) -> RootCustomCursor {
+    pub(crate) fn create_custom_cursor(&self, cursor: CustomCursorSource) -> Result<RootCustomCursor, ExternalError> {
         RootCustomCursor { inner: PlatformCustomCursor::X(CustomCursor::new(self, cursor.inner)) }
     }
 

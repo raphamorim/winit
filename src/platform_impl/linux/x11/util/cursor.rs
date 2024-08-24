@@ -9,7 +9,8 @@ use x11rb::protocol::xproto;
 
 use crate::platform_impl::PlatformCustomCursorSource;
 use crate::window::CursorIcon;
-use crate::error::{ExternalError, OsError};
+use crate::error::{ExternalError};
+use crate::platform_impl::{OsError};
 
 use super::super::ActiveEventLoop;
 use super::*;
