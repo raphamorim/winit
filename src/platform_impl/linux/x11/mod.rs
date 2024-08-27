@@ -32,7 +32,7 @@ use crate::event::{Event, StartCause, WindowEvent};
 use crate::event_loop::{ActiveEventLoop as RootAEL, ControlFlow, DeviceEvents, EventLoopClosed};
 use crate::platform::pump_events::PumpStatus;
 use crate::platform_impl::common::xkb::Context;
-use crate::platform_impl::platform::{min_timeout, WindowId, ExternalError;};
+use crate::platform_impl::platform::{min_timeout, WindowId};
 use crate::platform_impl::{
     ActiveEventLoop as PlatformActiveEventLoop, OsError, PlatformCustomCursor,
 };
@@ -646,8 +646,8 @@ impl ActiveEventLoop {
         self.xconn.primary_monitor().ok()
     }
 
-    pub(crate) fn create_custom_cursor(&self, cursor: CustomCursorSource) -> Result<RootCustomCursor, ExternalError> {
-        RootCustomCursor { inner: PlatformCustomCursor::X(CustomCursor::new(self, cursor.inner)?) }
+    pub(crate) fn create_custom_cursor(&self, cursor: CustomCursorSource) -> RootCustomCursor {
+        RootCustomCursor { inner: PlatformCustomCursor::X(CustomCursor::new(self, cursor.inner).unwrap()) }
     }
 
     pub fn listen_device_events(&self, allowed: DeviceEvents) {
